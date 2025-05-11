@@ -13,7 +13,7 @@ ENV PATH="/usr/local/texlive/bin:$PATH"
 WORKDIR /tmp_to_install_texlive
 
 # install準備
-COPY LaTeX/texlive.profile .
+COPY 7_TeX_Codes/texlive.profile .
 
 # install TeX Live
     
@@ -33,7 +33,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workdir
-COPY LaTeX/.latexmkrc ./
+COPY 7_TeX_Codes/.latexmkrc ./
 
 # latexmkのインストール
 RUN tlmgr install latexmk && \
