@@ -33,7 +33,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workdir
-COPY LaTeX/.latexmkrc ./
+COPY 7_TeX_Codes/.latexmkrc ./
 
 # latexmkのインストール
 RUN tlmgr install latexmk && \
