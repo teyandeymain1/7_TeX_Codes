@@ -20,7 +20,7 @@ COPY 7_TeX_Codes/texlive.profile .
 RUN apt-get update && \
     # wget install
     apt-get install -y wget ca-certificates perl && \
-    # ミラーサイトから install-tl-unx.tar.gz をダウンロード、-O は wget がダウンロードしたデータを標準のファイル名ではなく、指定したパス／ファイル名で保存するオプション
+    # ミラーサイトから install-tl-unx.tar.gz をダウンロード
     wget ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz && \
     # tar の --strip-components 1 オプションを使って、展開後のディレクトリを切り捨てて、第2階層をフラットに展開
     tar -xf install-tl-unx.tar.gz --strip-components 1 && \
