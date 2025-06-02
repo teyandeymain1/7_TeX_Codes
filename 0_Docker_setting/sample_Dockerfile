@@ -12,7 +12,7 @@ ENV PATH="/usr/local/texlive/bin:$PATH"
 # インストール用の一時ディレクトリを作成
 WORKDIR /tmp_to_install_texlive
 
-# install準備
+# texlive.profileをカレントディレクトリ(.)にコピー
 COPY 7_TeX_Codes/texlive.profile .
 
 # install TeX Live
