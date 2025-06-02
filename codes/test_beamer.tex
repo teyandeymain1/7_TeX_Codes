@@ -1,0 +1,122 @@
+\documentclass[aspectratio=169,12pt]{beamer}
+
+\mode<handout>
+{
+\usepackage{pgfpages}
+\pgfpagesuselayout{4 on 1}[a4paper,landscape]
+}
+
+\usefonttheme{professionalfonts}
+
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,bbding,pifont}
+\usepackage{xspace}
+\usepackage{transparent}
+\usepackage{amsmath,amssymb,alltt,ifthen}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{stmaryrd}
+\usepackage{bussproofs}
+\usepackage{transparent}
+
+% ----------------------------Title----------------------------
+\author{Yuta Sunagawa}
+\begin{document}
+  \title{Test} % Slide 1
+  \institute{Ore University}
+  \begin{frame}
+    \maketitle
+    \begin{quote}
+    \end{quote}
+  \end{frame}
+
+% ----------------------------本体----------------------------
+  % Slide 2
+  \begin{frame}
+    \frametitle{Goal and Motivation}
+    \begin{alertblock}{Goal}
+      {\underline{Goal:}}\\
+      Explain unification problem and most general unifer (mgu).\\
+      {\underline{Motivation:}}\\
+        \begin{enumerate}
+            \item Unification algorithm
+          \begin{itemize}
+            \item Input: unification problem $S$
+            \item Output: most general unifier $\sigma$
+          \end{itemize}
+          \item Rewriting induction
+        \end{enumerate}
+    \end{alertblock}
+    \begin{block}{Overview}<+->
+      \begin{enumerate}
+        \item What is unification problem? 
+        \item Definition of most general unifer (mgu)
+      \end{enumerate}
+    \end{block}
+  \end{frame}
+
+  % Slide 3
+  \begin{frame}
+    \frametitle{Unification problem}
+    \begin{definition}
+      \alert{Unification problem} is a finite set of eqations of $S = \{s_1 =^? t_1, \ldots, s_n =^? t_n\}$.
+    \end{definition}
+    \begin{example}
+      (copy from somewhere)
+    \end{example}
+  \end{frame}
+
+  % Slide 4
+  \begin{frame}
+    \frametitle{Unifier}
+    \begin{definition}
+      \begin{itemize}
+        \item  A substitution $\sigma$ is \alert{unifier} or \alert{solution} of $S$ if $\sigma s_i = \sigma t_i$ for $i = 1, \ldots, n.$
+        \item $S$ is \alert{unifiable} if $\mathcal{U}(S) \ne \emptyset$ \quad ($\mathcal{U}(S)$ is set of all unifers of $S$).
+      \end{itemize}
+    \end{definition}
+    \begin{example}
+      (copy from somewhere)
+    \end{example}
+  \end{frame}
+
+  % Slide 5
+  \begin{frame}
+    \frametitle{More general unifier}
+    \begin{definition}
+      $\sigma$ is more general than $\sigma'$ if there is a substitution $\delta$ such that $\sigma' = \delta\sigma$. \\
+      In this case, we write $\sigma \lesssim \sigma'$.
+    \end{definition}
+    \begin{example}
+      (copy from somewhere)
+    \end{example}
+    \begin{lemma}
+      The relation $\lesssim$ on substitutions is a quasi-order.
+    \end{lemma}
+  \end{frame}
+
+  % Slide 6
+  \begin{frame}
+    \frametitle{Most general unifier}
+    \begin{definition}
+      $\sigma$ is most general unifier (mgu) if $\sigma$ is $\mathcal{U}(S)$:
+      \begin{itemize}
+        \item $\sigma \in \mathcal{U}(S)$ and
+        \item $\forall\sigma' \in \mathcal{U}(S)$.  $\sigma \lesssim \sigma'$.
+      \end{itemize}
+    \end{definition}
+    \begin{example}
+      (copy from somewhere)
+    \end{example}
+    \begin{theorem}
+      If unification probrem \textit{$S$} has a solution then it has an mgu.
+    \end{theorem}
+  \end{frame}
+
+  % Slide 7
+  \begin{frame}
+
+  \end{frame}
+
+\end{document}
