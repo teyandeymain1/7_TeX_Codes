@@ -14,6 +14,17 @@
                 "james-yu.latex-workshop",
                 "valentjn.vscode-ltex",
                 // Support extension
+                // Verified ownership
+                // Support coding by AI
+                "visualstudioexptteam.vscodeintellicode",
+                "visualstudioexptteam.intellicode-api-usage-examples",
+                "github.copilot",
+                // Code arrangement
+                "oderwat.indent-rainbow",
+                "streetsidesoftware.code-spell-checker",
+                "esbenp.prettier-vscode",
+                // Git
+                "github.vscode-pull-request-github",
                 // Not verified ownership
                 // Git
                 "mhutchie.git-graph"
