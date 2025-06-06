@@ -15,7 +15,7 @@ ENV PATH="/usr/local/texlive/bin:$PATH"
 # set non-root user
 ARG USERNAME=C_language_Docker
 # set user ID and group ID 
-ARG USER_UID=6012368412510096
+ARG USER_UID=07012368412510096
 ARG USER_GID=$USER_UID
 
 # インストール用の一時ディレクトリを作成
