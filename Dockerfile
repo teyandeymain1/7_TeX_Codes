@@ -28,30 +28,28 @@ COPY 7_TeX_Codes/texlive.profile .
     
 RUN apt-get update && \
     # wget install
-    apt-get install -y wget ca-certificates perl && \
+    apt-get install -y wget ca-certificates perl &&\
     # ミラーサイトから install-tl-unx.tar.gz をダウンロード
-    wget ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz && \
+    wget ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz &&\
     # tar の --strip-components 1 オプションを使って、展開後のディレクトリを切り捨てて、第2階層をフラットに展開
-    tar -xf install-tl-unx.tar.gz --strip-components 1 && \
+    tar -xf install-tl-unx.tar.gz --strip-components 1 &&\
     # TeX Live を指定のインストールプロファイルとミラーサイトで非対話的にインストールする
-    ./install-tl -profile texlive.profile --location ${TEXLIVE_MIRROR} && \
+    ./install-tl -profile texlive.profile --location ${TEXLIVE_MIRROR} &&\
     # 長いパス(/usr/local/texlive/*/bin/*)の下にあるツールを、短いパス(t/usr/local/texlive/bin)で使えるようにするリンクを作る
-    ln -sf /usr/local/texlive/*/bin/* /usr/local/texlive/bin && \
-    # ディレクトリのパーミッションを全ユーザーが読み込み書き込み実行ができるように変更
-    chmod -R 777 /usr/local/texlive && \
+    ln -sf /usr/local/texlive/*/bin/* /usr/local/texlive/bin &&\
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workdir
 COPY 7_TeX_Codes/.latexmkrc ./
 
 # latexmkのインストール
-RUN tlmgr install latexmk && \
+RUN tlmgr install latexmk &&\
     # create user and group
     groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash && \   
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash &&\   
     # インストール用の一時ディレクトリを削除
-    rm -rf /tmp_to_install_texlive && \
-    apt-get clean && \
+    rm -rf /tmp_to_install_texlive &&\
+    apt-get clean &&\
     apt-get autoremove -y
 
 # set user
