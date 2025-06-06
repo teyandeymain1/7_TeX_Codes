@@ -17,6 +17,8 @@ ARG USERNAME=TeX_Docker
 # set user ID and group ID 
 ARG USER_UID=070357
 ARG USER_GID=$USER_UID
+# set local directory
+ARG LOCAL_DIR=/Users/teyan/Desktop/Programming/Codes/7_TeX_Codes
 
 # インストール用の一時ディレクトリを作成
 WORKDIR /tmp_to_install_texlive
@@ -39,7 +41,7 @@ RUN apt-get update &&\
     ln -sf /usr/local/texlive/*/bin/* /usr/local/texlive/bin &&\
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /workdir
+WORKDIR $LOCAL_DIR
 COPY 7_TeX_Codes/.latexmkrc ./
 
 # latexmkのインストール
