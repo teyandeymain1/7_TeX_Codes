@@ -13,7 +13,7 @@ ARG TEXLIVE_MIRROR=https://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet
 ENV LANG=C.UTF-8
 ENV PATH="/usr/local/texlive/bin:$PATH"
 # set non-root user
-ARG USERNAME=C_language_Docker
+ARG USERNAME=TeX_Docker
 # set user ID and group ID 
 ARG USER_UID=070357
 ARG USER_GID=$USER_UID
