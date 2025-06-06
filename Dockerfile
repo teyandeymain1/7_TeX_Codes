@@ -26,7 +26,7 @@ COPY 7_TeX_Codes/texlive.profile .
 
 # install TeX Live
     
-RUN apt-get update && \
+RUN apt-get update &&\
     # wget install
     apt-get install -y wget ca-certificates perl &&\
     # ミラーサイトから install-tl-unx.tar.gz をダウンロード
