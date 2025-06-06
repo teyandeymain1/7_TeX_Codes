@@ -1,13 +1,22 @@
 FROM debian:bookworm-slim
 
 
+# ---------------------------下記の設定は変更可能---------------------------
+
+
 # TeX Liveはミラーによって速度が変わりまくるのでARGでミラーを選択できるように
 ARG TEXLIVE_MIRROR=https://ftp.jaist.ac.jp/pub/CTAN/systems/texlive/tlnet
 
 
+# ---------------------------下記の設定は変更しないでください---------------------------
 # 環境設定変数
 ENV LANG=C.UTF-8
 ENV PATH="/usr/local/texlive/bin:$PATH"
+# set non-root user
+ARG USERNAME=C_language_Docker
+# set user ID and group ID 
+ARG USER_UID=6012368412510096
+ARG USER_GID=$USER_UID
 
 # インストール用の一時ディレクトリを作成
 WORKDIR /tmp_to_install_texlive
@@ -37,7 +46,13 @@ COPY 7_TeX_Codes/.latexmkrc ./
 
 # latexmkのインストール
 RUN tlmgr install latexmk && \
+    # create user and group
+    groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash && \   
     # インストール用の一時ディレクトリを削除
     rm -rf /tmp_to_install_texlive && \
     apt-get clean && \
     apt-get autoremove -y
+
+# set user
+USER $USERNAME

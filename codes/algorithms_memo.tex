@@ -1,14 +1,29 @@
+%　以下消すな
+%　パッケージ
 \documentclass{ltjsarticle}
+\usepackage{amsmath}
+% ドキュメントスタート
 \begin{document}
 % 以上消すな
 
 \section{探索}
 \subsection{mブロック}
 \paragraph{計算量}
-\begin{equation}
-  \text{比較回数} \leq (\text{ブロック数} + \text{ブロック長}) = m + \frac{n}{m}
-\end{equation}
+探索の計算量は、ブロック数を $m$、ブロック長を $\frac{n}{m}$ とすると、
+\begin{align}
+    \text{比較回数} &\leq (\text{ブロック数} + \text{ブロック長}) = m + \frac{n}{m}
+\end{align}
+    $f(m, n) = m + \frac{n}{m}$と置き、$f(m, n)$の最小値(があるとしたら)は\\
+\begin{align}
+    \frac{\partial f(m, n)}{\partial m} &= 1 - \frac{n}{m^2} = 0 \\
+    m = \sqrt{n}
+\end{align}
+となり、計算量は $O(\sqrt{n})$ となる。
 
+\subsection{二重以上のmブロック法}
+
+
+\paragraph{計算量}
 
 
 
