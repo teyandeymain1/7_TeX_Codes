@@ -15,7 +15,7 @@ ENV PATH="/usr/local/texlive/bin:$PATH"
 # set non-root user
 ARG USERNAME=C_language_Docker
 # set user ID and group ID 
-ARG USER_UID=07012368412510096
+ARG USER_UID=070357
 ARG USER_GID=$USER_UID
 
 # インストール用の一時ディレクトリを作成
@@ -45,8 +45,8 @@ COPY 7_TeX_Codes/.latexmkrc ./
 # latexmkのインストール
 RUN tlmgr install latexmk &&\
     # create user and group
-    groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash &&\   
+    groupadd --gid $USER_GID $USERNAME &&\
+    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash &&\   
     # インストール用の一時ディレクトリを削除
     rm -rf /tmp_to_install_texlive &&\
     apt-get clean &&\
