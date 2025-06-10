@@ -39,6 +39,8 @@ RUN apt-get update &&\
     ./install-tl -profile texlive.profile --location ${TEXLIVE_MIRROR} &&\
     # 長いパス(/usr/local/texlive/*/bin/*)の下にあるツールを、短いパス(t/usr/local/texlive/bin)で使えるようにするリンクを作る
     ln -sf /usr/local/texlive/*/bin/* /usr/local/texlive/bin &&\
+    # ディレクトリのパーミッションを全ユーザーが読み込み書き込み実行ができるように変更
+    chmod -R 777 /usr/local/texlive && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR $LOCAL_DIR
