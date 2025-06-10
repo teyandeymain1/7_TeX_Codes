@@ -1,0 +1,91 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+
+
+\lstset{
+    language=C,
+    basicstyle=\ttfamily,
+    breaklines=true
+}
+
+\begin{document}
+
+1) サンプルのコードのスケジューリングアルゴリズムについて解説せよ。
+
+このコードのスケジューリングアルゴリズムは、キューを用いたラウンドロビンスケジューリングに近いものである。
+
+\section*{プロセスの状態の定義}
+\begin{lstlisting}[language=C]
+enum sim_proc_state {
+    NOEXIST = 0,
+    READY,        /*  READY = 1 */
+    RUNNING,   /* RUNNING = 2 */
+    BLOCKED    /* BLOCKED = 3 */
+};
+\end{lstlisting}
+
+\section*{キューの定義}
+\begin{itemize}
+    \item \texttt{ready\_queue} : READY状態にあるプロセスを管理するキュー
+    \item \texttt{blocked\_queue} : BLOCKED状態にあるプロセスを管理するキュー
+\end{itemize}
+これらは、ライブラリの \texttt{sys/queue.h} で定義されているマクロを使って定義および初期化されている。\\
+スケジューリングは関数 \texttt{void sched(void)} によって実行される。
+
+\section*{ready\_queue への追加}
+以下のコードは、実行中 (RUNNING) のプロセスが存在する場合、その状態を保存し、状態をRUNNINGからREADYに変更して、\texttt{ready\_queue} の末尾に追加する処理を示している。
+\begin{lstlisting}[language=C]
+if (activeproc != NULL) {
+    sim_cpustate_save(&activeproc->proc_cpustate);
+    TAILQ_INSERT_TAIL(&ready_queue, activeproc, proc_list);
+    activeproc->proc_state = READY;
+    sim_logging(activeproc, "[Trace] State change RUNNING->READY");
+    activeproc = NULL;
+}
+\end{lstlisting}
+
+\section*{ready\_queue から取り出し}
+以下のコードは、\texttt{ready\_queue} から先頭のプロセスを取り出し、状態をREADYからRUNNINGに変更する処理を示している。
+\begin{lstlisting}[language=C]
+activeproc = TAILQ_FIRST(&ready_queue);
+if (activeproc != NULL) {
+    TAILQ_REMOVE(&ready_queue, activeproc, proc_list);
+    activeproc->proc_state = RUNNING;
+    sim_logging(activeproc, "[Trace] State change READY->RUNNING");
+    sim_cpustate_restore(&activeproc->proc_cpustate, SIM_CPUMAXBURST);
+}
+\end{lstlisting}
+
+\section*{ready\_queue が空のとき}
+\begin{lstlisting}[language=C]
+if (activeproc != NULL) {
+    ... 
+} else {
+    sim_wait_nextintr();
+}
+\end{lstlisting}
+この部分は、\texttt{ready\_queue} が空、つまりREADY状態のプロセスが存在しない場合にCPUを待機させ、\texttt{sim\_wait\_nextintr()} を呼び出して割り込みの発生を待つ処理である。\\
+また、\texttt{sim\_iorequest()} によってI/O要求を呼び出したプロセスがBLOCKED状態から、I/O完了（このコードでは10ミリ秒後に完了）によりREADYに戻る場合を想定している。
+
+\section*{まとめ}
+このコードのアルゴリズムは、以下の特徴を持つ。
+\begin{itemize}
+    \item \textbf{公平性:} RUNNINGのプロセスがREADYに遷移する際、プロセスはキューの末尾に追加されるため、特定のプロセスが長時間CPUを独占することはない。これはラウンドロビンスケジューリングの特徴と一致する。
+    \item \textbf{動的なプロセス管理:} \texttt{ready\_queue} が空のときの処理により、I/O要求完了でBLOCKED状態からの復帰や、実行制限時間消費後の再スケジューリングによって、システムは動的な変化に対応できる。
+    \item \textbf{割り込み処理との統合:} \texttt{ready\_queue} が空の場合、CPUは待機状態に入り、割り込みの発生を待つことで外部イベントに迅速に反応できる。
+\end{itemize}
+
+ただし、\texttt{\#define SIM\_CPUMAXBURST 0} により、CPUバーストの上限が設定されていないため、実行制限時間（クォンタム）が存在しない。\\
+そのため、各プロセスはI/O要求など自身の判断でRUNNINGからBLOCKEDへ状態が切り替わり、厳密にはラウンドロビンスケジューリングアルゴリズムとは異なる動作となる。
+
+
+
+
+
+
+
+
+% 以下消すな
+\end{document}
